@@ -1,7 +1,5 @@
-
 //
-//  NumberGessingGame.java
-//  ver1.0 (2018/06/01)
+//  NumberGuessingGame.java
 //
 //  Created by Hirano Keisuke on 2018/06/01.
 //  Copyright © 2018年 Hirano Keisuke. All rights reserved.
@@ -24,7 +22,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
-public class NumberGessingGame {
+public class NumberGuessingGame {
 
     Process[] processes;
     InputStream[] inputStreams;
@@ -34,7 +32,7 @@ public class NumberGessingGame {
 
     int min,max,change;
 
-    public NumberGessingGame(String[] args) {
+    public NumberGuessingGame(String[] args) {
         // 各種設定と実行コマンド関連の処理
         setting = new Setting();
         setting.start(args);
@@ -201,7 +199,7 @@ public class NumberGessingGame {
     }
 
     public static void main(String[] args) {
-        NumberGessingGame obj = new NumberGessingGame(args);
+        NumberGuessingGame obj = new NumberGuessingGame(args);
         if(obj.setting.isTest()){
             obj.test();
         } else {
@@ -235,7 +233,6 @@ public class NumberGessingGame {
             }
         }
         result(attackNames, defenceNames, resultTable);
-        
     }
 
     private void result(String[] attackNames, String[] defenceNames, double[][] score) {
@@ -280,7 +277,7 @@ public class NumberGessingGame {
         List<String> defenceCommandList = setting.getDefenceCommand();
         List<String> sampleAttackCommandList = setting.getSampleAttackCommand();
         List<String> sampleDefenceCommandList = setting.getSampleDefenceCommand();
-        Logger testRunLogger = Logger.getLogger(NumberGessingGame.class.getName());
+        Logger testRunLogger = Logger.getLogger(NumberGuessingGame.class.getName());
         loggerInit(testRunLogger, "src/main/resource/log/test_run_err/err.log");
 
         // 実行コマンド出力ファイルの準備
