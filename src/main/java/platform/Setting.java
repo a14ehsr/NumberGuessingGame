@@ -16,34 +16,29 @@ import java.io.File;
  * 引数無し実行時には対話モードで動作する．
  */
 class Setting {
-    private List<String> command;
-    private List<String> sampleCommand;
+    private List<String> attackCommand;
+    private List<String> defenceCommand;
+    private List<String> sampleAttackCommand;
+    private List<String> sampleDefenceCommand;
     private int gameNum;
     private int roundNum;
     private int outputLevel;
     private boolean isTest;
 
-    private final String[] sampleName = {
-        "Ai_1000yen",
-        "Ai_Average",
-        "Ai_Minus1",
-        "Ai_Random",
-        "Ai_Monoinc",
-        "Ai_Monodec",
-    };
-    
+    private int minNumber;
+    private int maxNumber;
+    private int change;
     /**
      * デフォルトコンストラクタ
      * コマンドのリストの準備と設定ファイル読み込み
      */
     Setting(){
         isTest = false;
-        command = new ArrayList<>();
-        sampleCommand = new ArrayList<>();
-        String runCommand = "java src.main.java.sample_ai.";
-        for (String name : sampleName) {
-            sampleCommand.add(runCommand + name);
-        }
+        attackCommand = new ArrayList<>();
+        defenceCommand = new ArrayList<>();
+        sampleAttackCommand = new ArrayList<>();
+        sampleDefenceCommand = new ArrayList<>();
+
         try {
             defaultSetting();  
         } catch (Exception e) {
@@ -53,22 +48,21 @@ class Setting {
             System.exit(0);
         } 
     }
-    /**
-     * 実行コマンドを返す
-     * 
-     * @param index 実行コマンドリストの何番目を返すか
-     * @return 実行コマンド
-     */
-    String getCommand(int index) {
-        return command.get(index);
+
+    List<String> getAttackCommand() {
+        return attackCommand;
     }
 
-    List<String> getRunCommandList() {
-        return command;
+    List<String> getDefenceCommand() {
+        return defenceCommand;
     }
 
-    List<String> getSampleCommandList() {
-        return sampleCommand;
+    List<String> getSampleAttackCommand() {
+        return sampleAttackCommand;
+    }
+
+    List<String> getSampleDefenceCommand() {
+        return sampleDefenceCommand;
     }
     
     /**
@@ -79,7 +73,7 @@ class Setting {
     }
 
     /**
-     * ラウンド数のgetter
+     * 最大ラウンド数のgetter
      */
     int getRoundNum() {
         return roundNum;
@@ -94,6 +88,18 @@ class Setting {
 
     boolean isTest() {
         return isTest;
+    }
+
+    int getMin() {
+        return minNumber;
+    }
+
+    int getMax() {
+        return maxNumber;
+    }
+
+    int getChange() {
+        return change;
     }
 
     /**
@@ -124,10 +130,27 @@ class Setting {
 
         line = sc.nextLine().split(" ");
         if (!"outputlevel".equals(line[0])) {
-            throw new Exception("line2 need be outputlevel");
+            throw new Exception("line3 need be outputlevel");
         }
         outputLevel = Integer.parseInt(line[1]);
 
+        line = sc.nextLine().split(" ");
+        if (!"min".equals(line[0])) {
+            throw new Exception("line4 need be min");
+        }
+        minNumber = Integer.parseInt(line[1]);
+
+        line = sc.nextLine().split(" ");
+        if (!"max".equals(line[0])) {
+            throw new Exception("line5 need be max");
+        }
+        maxNumber = Integer.parseInt(line[1]);
+
+        line = sc.nextLine().split(" ");
+        if (!"change".equals(line[0])) {
+            throw new Exception("line6 need be change");
+        }
+        change = Integer.parseInt(line[1]);
     }
 
     /**
@@ -139,13 +162,19 @@ class Setting {
         boolean successed = false;
         if (args.length > 0) {
             try {
-                successed = setOption(args);
-            } catch (Exception e) {
+                setOption(args);
+            } catch (NumberFormatException e) {
                 System.err.println(e);
-                successed = false;
+                System.out.println("オプションがおかしいです．");
+                System.out.println("対話モードで起動します．");
+                dialogueMode();
+            } catch (ArrayIndexOutOfBoundsException e) {
+                System.err.println(e);
+                System.out.println("オプションがおかしいです．");
+                System.out.println("対話モードで起動します．");
+                dialogueMode();
             }
-        }
-        if (!successed) {
+        } else {
             dialogueMode();
         }
     }
@@ -157,12 +186,15 @@ class Setting {
      * @return 成功か否か
      * @throws Exception 範囲外アクセス，型変換例外
      */
-    boolean setOption(final String[] options) throws Exception{
-        int tmp;
+    void setOption(final String[] options) throws  NumberFormatException, ArrayIndexOutOfBoundsException{
         for (int i = 0; i < options.length; i+=2) {
             switch (options[i]) {
-            case "-p":
-                command.add(options[i + 1]);
+            case "-a":
+                attackCommand.add(options[i + 1]);
+                break;
+
+            case "-d":
+                defenceCommand.add(options[i + 1]);
                 break;
 
             case "-game":
@@ -170,7 +202,7 @@ class Setting {
                 break;
 
             case "-olevel":
-                tmp = Integer.parseInt(options[i + 1]);
+                int tmp = Integer.parseInt(options[i + 1]);
                 if (tmp > 3 || tmp < 1) {
                     System.out.println("出力モードは1,2,3のいずれかです．その他の値が入力されています．");
                     System.out.println("既定値で実行します．");
@@ -179,30 +211,42 @@ class Setting {
                 }
                 break;
 
-            case "-ai":
-                setAi(Integer.parseInt(options[i + 1]));
+            case "-c":
+                change = Integer.parseInt(options[i + 1]);
+                break;
+            
+            case "-min":
+                minNumber = Integer.parseInt(options[i + 1]);
+                break;
+
+            case "-max":
+                maxNumber = Integer.parseInt(options[i + 1]);
                 break;
 
             case "-auto":
-                readRunCommandList("src/main/resource/command_list/run_command_list_green.txt");
+                readCommandList(attackCommand, "src/main/resource/command_list/attack/attack_command_list_green.txt");
+                readCommandList(defenceCommand, "src/main/resource/command_list/defence/defence_command_list_green.txt");
+                /*
+                // サンプルはとりあえずなし
                 if("true".equals(options[i + 1])){
                     command.addAll(sampleCommand);
                 }
+                */
                 
                 break;
             case "-test":
                 gameNum = Integer.parseInt(options[i + 1]);
                 isTest = true;
-                readRunCommandList("src/main/resource/command_list/run_command_list.txt");
+                readCommandList(attackCommand,
+                        "src/main/resource/command_list/attack/attack_command_list.txt");
+                readCommandList(defenceCommand,
+                        "src/main/resource/command_list/defence/defence_command_list.txt");
                 outputLevel = 0;
                 break;
             default:
-                System.out.println("オプションがおかしいです．");
-                System.out.println("対話モードで起動します．");
-                return false;
+                throw new ArrayIndexOutOfBoundsException();
             }
         }
-        return true;
     }
 
     /**
@@ -214,10 +258,10 @@ class Setting {
         System.out.println("対話モード起動");
 
         // aiの設定
-        System.out.println("プレイヤー1を設定します．");
-        playerSetting(sc);
-        System.out.println("プレイヤー2を設定します．");
-        playerSetting(sc);
+        System.out.println("攻撃プレイヤーを設定します．");
+        attackCommand.add(sc.next());
+        System.out.println("防御プレイヤーを設定します．");
+        defenceCommand.add(sc.next());
 
         // gameNum 変更処理
         System.out.print("ゲーム数を変更しますか？ (y/n) :");
@@ -229,33 +273,7 @@ class Setting {
         System.out.println("対戦を開始します．");
     }
 
-    private void playerSetting(Scanner sc) {
-        System.out.println("使用するAIのプログラムをai_programに配置し，実行コマンドを入力してください");
-        System.out.println("サンプルAIを使用する場合にはsampleと入力してください");
-        String ai = sc.next();
-        if ("sample".equals(ai)) {
-            System.out.println("which AI Program? please input number.");
-            System.out.println("Ai_1000yen  : 0");
-            System.out.println("Ai_Average  : 1");
-            System.out.println("Ai_Minus1   : 2");
-            System.out.println("Ai_Random   : 3");
-            System.out.println("Ai_Monoinc  : 4");
-            System.out.println("Ai_Monodec  : 5");
-            setAi(sc.nextInt());
-        } else {
-            command.add(ai);
-        }
-    }
-
-    void setAi(int aiPattern) {
-        if(aiPattern < 0 || aiPattern >= sampleName.length) {
-            System.err.println("Ai番号が間違っています．");
-            return;
-        }
-        command.add(sampleCommand.get(aiPattern));
-    }
-
-    void readRunCommandList(String fileName) {
+    void readCommandList(List<String> commandList, String fileName) {
         Scanner sc = null;
         try {
             sc = new Scanner(new File(fileName));
@@ -263,7 +281,7 @@ class Setting {
             e.printStackTrace();
         }
         while(sc.hasNext()) {
-            command.add(sc.nextLine());
+            commandList.add(sc.nextLine());
         }
     }
 

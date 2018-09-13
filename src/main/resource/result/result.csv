@@ -1,5 +1,8 @@
 RESULT
-,Sample_python,Sample_java,Sample_cpp,win,lose,draw
-Sample_python,0,0,0,0,0,2
-Sample_java,0,0,0,0,0,2
-Sample_cpp,0,0,0,0,0,2
+,Hashimoto,Masuda,Miura,Yasuoka,player1
+playerCpp2,NaN,40.611111,5.000000,NaN,2.333333,
+Watanabe,22.180000,5.420000,13.870000,18.200000,11.948980,
+player2,15.610000,0.000000,12.140000,17.239130,22.340206,
+Nagai,14.130000,9.860000,6.920000,7.810000,8.350000,
+Yoshida,9.410000,9.290000,10.390000,9.700000,10.640000,
+Adachi,12.480000,0.000000,9.160000,11.190000,38.030000,
