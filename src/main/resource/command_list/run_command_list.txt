@@ -1,0 +1,3 @@
+python ./src/main/ai_program/sample_python/P_Name.py
+java -classpath ./src/main/ai_program/sample_java P_Name
+./src/main/ai_program/sample_cpp/P_Name

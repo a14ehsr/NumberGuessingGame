@@ -1,0 +1,3 @@
+game 100
+round 10
+outputlevel 1
