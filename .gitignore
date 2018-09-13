@@ -2,3 +2,15 @@
 
 *.class
 
+/src/main/ai_program/*
+!/src/main/ai_program/.gitkeep
+/src/main/resource/command_list/attack/*
+!/src/main/resource/command_list/attack/.gitkeep
+/src/main/resource/command_list/defence/*
+!/src/main/resource/command_list/defence/.gitkeep
+/src/main/resource/log/auto_compile/*
+!/src/main/resource/log/auto_compile/.gitkeep
+/src/main/resource/log/test_run_err/*
+!/src/main/resource/log/test_run_err/.gitkeep
+/src/main/resource/result/*
+!/src/main/resource/result/.gitkeep
