@@ -33,7 +33,7 @@ Copyright © 2018年 Hirano Keisuke. All rights reserved.
 bet関数の引数は
 
 |変数名|説明|
-|---|---|---|
+|---|---|
 |game|何回目のゲームか(0以上gameNum未満）|
 |round|何回目のラウンドか(0以上roundNum未満）|
 
@@ -49,7 +49,7 @@ bet関数の引数は
 src/main/resource/log/auto_compile/compile_err_list.txt  
 テスト実行時エラーは，  
 src/main/resource/log/test_run_err/err.log  
-対戦結果は,  
+対戦結果は,  
 src/main/resource/resource/result/result.csv  
 に出力されます．
 
