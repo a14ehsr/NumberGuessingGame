@@ -112,6 +112,8 @@ public class NumberGuessingGame {
                     Integer.parseInt(bufferedReaders[0].readLine()),
                     Integer.parseInt(bufferedReaders[1].readLine())
                 };
+                if (outputLevel > 2)
+                    System.out.printf("   round%03d : (Attack,Defence) = (%3d,%3d)\n", j, num[0], num[1]);
 
                 // 範囲内の数字かチェック
                 checkRange(num, names);
@@ -143,8 +145,6 @@ public class NumberGuessingGame {
                 outputStreams[1].write((num[0] + "\n").getBytes());
                 outputStreams[1].flush();
 
-                if (outputLevel >= 2)
-                    System.out.printf("   round%03d : (Attack,Defence) = (%3d,%3d)\n", j, num[0], num[1]);
 
                 if (ud == 0) {
                     hit++;
@@ -157,13 +157,13 @@ public class NumberGuessingGame {
 
             }
 
-            if (outputLevel >= 1) {
+            if (outputLevel > 1) {
                 if(j < round) System.out.printf("%3d回目でhit\n",(j+1));
                 else System.out.println("hitならず");   
             }
 
         }
-        if (outputLevel >= 0) {
+        if (outputLevel > 0) {
             System.out.printf("%3d/%d average = %f\n", hit, n, ((double) hitRoundSum / hit));
         }
         return new Result(names, hit, hitRoundSum);
