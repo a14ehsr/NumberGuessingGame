@@ -182,6 +182,7 @@ class Setting {
         } else {
             dialogueMode();
         }
+        System.out.println("設定終了");
     }
     
     /**
