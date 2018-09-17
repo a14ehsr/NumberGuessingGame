@@ -1,5 +1,5 @@
-# 二分探索ゲーム対戦用プラットフォーム
-Copyright © 2018年 Hirano Keisuke. All rights reserved.  
+# 数当てゲーム対戦用プラットフォーム
+Copyright © 2018年 K.Hirano All rights reserved.  
 作成日2018/5/18  
 最終更新日2018/9/17  
 
@@ -8,55 +8,75 @@ Copyright © 2018年 Hirano Keisuke. All rights reserved.
 - readmeの修正
 
 ---
-## ___長文を読みたくない皆様へ___
-長文を読みたくない皆様はここだけは読んでください．  
-そうでない方は，`動作確認済み環境`以降を読んでいただければ大丈夫です．
-### コンパイル
+# とてもシンプルなREADME
+
+## 0. 数当てゲームとは
+
+## 1. このリポジトリをcloneしよう
+### 1.1 clone
+ターミナルで以下を実行
+
+`git clone https://github.com/a14ehsr/NumberGuessingGame.git`
+
+### 1.2 作業ディレクトリを移動しよう
+ターミナルで以下を実行
+
+`cd NumberGuessingGame`
+
+## 2. AIプログラムの準備
+### 2.0 サンプルプログラム
+src/main/sample_programs内の任意のプログラムをベースにAIを作成します．  
+以下の言語のサンプルを用意しています．
+
+- C
+- C++
+- Java
+- Python
+
+### 2.1 AIの作り方
+1. サンプルプログラムを適当なディレクトリにコピーしましょう．
+2. ファイル名を変更しましょう．
+	- 攻撃側AIなら`A_名前`，防御側AIなら`D_名前`にしましょう．
+		- Javaを使用する場合には，クラス名の変更忘れに注意しましょう．
+3. playerNameを書き換えてください．授業などで使う時には何かしらの統一を推奨します．
+4. サンプルの指定された部分を修正して，設計したAIを実装しましょう．
+
+#### 注意事項
+- 出力を行いたい場合には，標準エラー出力（fprintf(stderr,"str")）を使用してください．
+
+### 2.2 作ったら
+#### コンパイルしましょう
+作ったプログラムがコンパイルできるか確かめましょう．
+#### 実行用AI置き場に配置しましょう
+src/main/ai_programにプログラムを配置しましょう．
+## 3. 対戦環境の準備
+### 3.1 コンパイル
 `javac src/main/java/platform/NumberGuessingGame.java`
 
-### AIプログラムの準備
-@TODO 修正
-- src/main/sample_programs内の任意のプログラムをベースにAIを作成します． 
-- サンプルは毎ラウンド攻撃側はランダム，防御側は一定値を返すだけのプログラムです． 
-- 各プログラムのbet関数の中<u>__だけ__</u>を書き換えてください．  
-- ファイル名を変えてください．A_から始まるものを攻撃側プログラム，D_から始まるものを防御側プログラムとして実行します．
-  - javaの場合にはファイル名とクラス名を合わせるように気をつけてください．
-- playerNameを書き換えてください．授業などで使う時には学籍番号などを推奨します．  
-- __標準出力は使わないでください．__
-  - デバッグなどで出力を使いたいときは標準エラー出力を使用してください．  
+### 3.2 実行手順
+上から順に実行してください．
 
-各サンプルのbet関数内で使える引数以外の変数は以下の通りです．
+1. `python src/main/python/auto_compile/auto_compile.py`
+2. `java src.main.java.platform.NumberGuessingGame -test 10`
+3. `java src.main.java.platform.NumberGuessingGame -auto false`
 
-|変数名|説明|
-|---|---|
-|gameNum|ゲーム数|
-|roundNum|ラウンド数(基本は10)|
+順次実行結果が出力されます．
 
-bet関数の引数は
+### 3.3 リザルト
+コンパイルエラー，テスト実行でのエラーはsrc/main/resource/log/のファイルを確認してください．
+実行結果はsrc/main/resource/result/result.csvに出力されます．
+
+### AIプログラムの準備の補足
+関数の引数
 
 |変数名|説明|
 |---|---|
 |game|何回目のゲームか(0以上gameNum未満）|
 |round|何回目のラウンドか(0以上roundNum未満）|
 
-
-作ったプログラムはai_programに配置してください．ディレクトリごと配置しても構いません．
-
-### 実行
-1. `python src/main/python/auto_compile/auto_compile.py`
-2. `java src.main.java.platform.NumberGuessingGame -test 10`
-3. `java src.main.java.platform.NumberGuessingGame -auto false`
-
-コンパイルエラーのプログラムは  
-src/main/resource/log/auto_compile/compile_err_list.txt  
-テスト実行時エラーは，  
-src/main/resource/log/test_run_err/err.log  
-対戦結果は,  
-src/main/resource/resource/result/result.csv  
-に出力されます．
-
 --------------
 
+# より細かなREADME
 
 ## 動作確認済み環境
 ### Java
@@ -98,8 +118,8 @@ pythonの場合には，`"python Attack.py"`
 ### ゲーム設定の変更
 
 |オプション|説明|default|
-|-|-|-:|
-|-game num|ゲーム数を`num`に指定|100|
+|--------|---|--:|
+|-game num|ゲーム数を`num`に指定|100|
 |-round num|最大ラウンド数を`num`に指定|100|
 |-c num|防御側が1度数値を変更してから再度変更できるまでの制限回数を`num`に変更|10|
 |-min num|使用する数値の最小値(inclusive)を`num`に変更|1|
@@ -108,13 +128,13 @@ pythonの場合には，`"python Attack.py"`
 
 #### 対戦結果の出力レベルについて 
 |レベル|説明|
-|-:|-|
+|-----:|-----|
 |1|当てた回数と当てるまでの平均回数|
 |2|レベル1の出力に加え，各ゲームでの結果|
 |3|レベル2の出力に加え，各ラウンドの数値|
 
 ## 多対多実行について
-自動で複数のプログラムで対戦を行う機能があります．  
+複数のプログラムで自動対戦を行う機能があります．  
 コンパイル処理はPythonで実装しています．
 
 ### 手順概要
@@ -137,8 +157,8 @@ pythonの場合には，`"python Attack.py"`
 4. 対戦の実行  
 `java src.main.java.platform.NumberGuessingGame -auto bool`  
 `bool`には，trueかfalseを入れてください．
-- true :サンプルを含めて対戦
-- false:サンプルは含めず対戦
+  - ~~true :サンプルを含めて対戦~~  
+  - false:サンプルは含めず対戦
 
 ## AIのプログラムについて
 ### 前提として：対戦プラットフォームの仕組み
@@ -155,18 +175,29 @@ nゲーム*mラウンド分，ループを回して実装しています．
 どの言語でAIを実装しても動く想定です．
 
 サンプルプログラムは以下の言語の物を用意しています.
-- Java
+
+- C
 - C++
+- Java
 - Python
 
-C++のサンプルはほとんどCの実装になっているため，  
-出力などを変えれば，簡単にCのプログラムに書き換えられると思います．
+##  AIプログラムの準備
+
 
 ### サンプルプログラムの変更箇所について
-サンプルプログラムの以下の関数（メソッド）を書き換えることで使用できます．  
+src/main/sample_programs内のサンプルプログラムの以下を書き換えてください．  
 それ以外の部分を書き換えると，うまく動かない可能性があります．
+
+#### 攻防共通の変更
+- ファイル名を変えてください．`A_`から始まるものを攻撃側プログラム，`D_`から始まるものを防御側プログラムとして実行します．
+  - javaの場合にはファイル名とクラス名を合わせるように気をつけてください．
+- playerNameを書き換えてください．授業などで使う時には学籍番号などを推奨します．  
+- __標準出力は使わないでください．__
+  - 出力を行いたい場合には，標準エラー出力（System.err.print(),std::cerr）などを使用してください．
+
 #### 攻撃側:ask
 askの引数は以下の通りです．
+
 - game      :何回目のゲームか(0以上gameNum未満）
 - round     :何回目のラウンドか(0以上roundNum未満）
 - record    :gameNum × roundNum × 2の3次元配列．
@@ -175,6 +206,7 @@ askの引数は以下の通りです．
 
 #### 防御側:myNumber
 myNumberの引数は以下の通りです．
+
 - game      :何回目のゲームか(0以上gameNum未満）
 - round     :何回目のラウンドか(0以上roundNum未満）
 - record    :gameNum × roundNum × 2の3次元配列．
@@ -189,12 +221,3 @@ myNumberの引数は以下の通りです．
 |min        |使用可能な最小値        |
 |max        |使用可能な最大値        |
 |changeLimit|防御側の数値変更の制限回数|
-
-各言語のサンプルにおいて，bet関数(メソッド)の中を書き換えてください．  
-
-
-また，playerNameとクラス名のNameに当たる部分の書き換えもお願いします．  
-授業などで使う時には学籍番号などを指定するなど，運用は一任します．
-
-__標準出力は使わないでください．__
-出力を行いたい場合には，標準エラー出力（System.err.print(),std::cerr）などを使用してください．
