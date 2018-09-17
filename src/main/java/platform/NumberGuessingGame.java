@@ -32,6 +32,10 @@ public class NumberGuessingGame {
 
     int min,max,change;
 
+    String[] outputStr;
+
+    int timeout = 5000;
+
     public NumberGuessingGame(String[] args) {
         // 各種設定と実行コマンド関連の処理
         setting = new Setting();
@@ -45,6 +49,7 @@ public class NumberGuessingGame {
         inputStreams = new InputStream[2];
         outputStreams = new OutputStream[2];
         bufferedReaders = new BufferedReader[2];
+        
     }
 
     /**
@@ -62,8 +67,14 @@ public class NumberGuessingGame {
             inputStreams[i] = processes[i].getInputStream();
             bufferedReaders[i] = new BufferedReader(new InputStreamReader(inputStreams[i]));
             new ErrorReader(processes[i].getErrorStream()).start();
+            if (!processes[i].isAlive()) throw new IOException("次のサブプロセスを起動できませんでした．:"+processes[i]);
         }
     }
+
+    private void getOutput(int index) throws IOException{
+        outputStr[index] = bufferedReaders[index].readLine();
+    }
+
 
     /**
      * 対戦する
@@ -72,7 +83,7 @@ public class NumberGuessingGame {
      * @throws AgainstTheRulesException
      * @throws NumberFormatException
      */
-    private Result run() throws IOException, AgainstTheRulesException, NumberFormatException{
+    private Result run() throws IOException, AgainstTheRulesException, NumberFormatException, TimeoutException{
         try {
             Thread.sleep(100);
         } catch (Exception e) {
@@ -107,11 +118,32 @@ public class NumberGuessingGame {
             // round回のラウンド
             int j = 0;
             for (; j < round; j++) {
-                // それぞれの数字を取得
-                int[] num = {
-                    Integer.parseInt(bufferedReaders[0].readLine()),
-                    Integer.parseInt(bufferedReaders[1].readLine())
-                };
+                // それぞれの数字を取得 
+                Thread[] threads = new Thread[2];
+                outputStr = new String[2];
+                for (int p = 0; p < 2; p++) {
+                    threads[p] = new GetResponseThread(p);
+                    threads[p].start();
+                    try {
+                        threads[p].join(timeout);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+                for (int p = 0; p < 2; p++) {
+                    if (!processes[p].isAlive())
+                        throw new IOException("次のプレイヤーのサブプロセスが停止しました :" + names[p]);
+                    if (outputStr[p] == null) throw new TimeoutException("一定時間以内に次のプレイヤーから値を取得できませんでした :"+names[p]);
+                }
+                int[] num = new int[2];
+                for (int p = 0; p < 2; p++) {
+                    try {
+                        num[p] = Integer.parseInt(outputStr[p]);
+                    } catch (NumberFormatException e) {
+                        throw new NumberFormatException("次のプレイヤーから整数以外の値を取得しました :"+names[p]);
+                    }
+                }
+
                 if (outputLevel > 2)
                     System.out.printf("   round%03d : (Attack,Defence) = (%3d,%3d)\n", j, num[0], num[1]);
 
@@ -139,6 +171,11 @@ public class NumberGuessingGame {
                     ud = 0;
                 } else {
                     ud = num[0] < num[1] ? 1 : -1;
+                }
+
+                for (int p = 0; p < 2; p++) {
+                    if (!processes[p].isAlive())
+                        throw new IOException("次のプレイヤーのサブプロセスが停止しました :" + names[p]);
                 }
                 outputStreams[0].write((ud + "\n").getBytes());
                 outputStreams[0].flush();
@@ -183,6 +220,8 @@ public class NumberGuessingGame {
             }
         }
     }
+
+
 
     /**
      * 数字が範囲内かどうか
@@ -302,10 +341,12 @@ public class NumberGuessingGame {
                 }
                 pw.println(playerCommand);
             } catch (AgainstTheRulesException e) {
-                testRunLogger.log(Level.INFO, "テスト実行時エラー:"+ e);
+                testRunLogger.log(Level.INFO, "テスト実行時エラー :", e);
             } catch (NumberFormatException e) {
-                testRunLogger.log(Level.INFO, "テスト実行時エラー：動的型付け言語などで発生が見られます．\n返す値をintでキャストするなどによって回避できる可能性があります．", e);
-            } catch (IOException e) {
+                testRunLogger.log(Level.INFO, "テスト実行時エラー :", e);
+            } catch (IOException e) {                
+                System.err.println(e);
+            } catch (TimeoutException e) {
                 System.err.println(e);
             } finally {
                 processDestroy();
@@ -334,10 +375,12 @@ public class NumberGuessingGame {
                 }
                 pw.println(playerCommand);
             } catch (AgainstTheRulesException e) {
-                testRunLogger.log(Level.INFO, "テスト実行時エラー:" + e);
+                testRunLogger.log(Level.INFO, "テスト実行時エラー :", e);
             } catch (NumberFormatException e) {
-                testRunLogger.log(Level.INFO, "テスト実行時エラー：動的型付け言語などで発生が見られます．\n返す値をintでキャストするなどによって回避できる可能性があります．", e);
+                testRunLogger.log(Level.INFO, "テスト実行時エラー :", e);
             } catch (IOException e) {
+                System.err.println(e);
+            } catch (TimeoutException e) {
                 System.err.println(e);
             } finally {
                 processDestroy();
@@ -385,6 +428,38 @@ public class NumberGuessingGame {
             super(mes);
         }
     }
+    
+    /**
+     * タイムアウト発生時に投げる例外クラス
+     */
+    class TimeoutException extends Exception {
+        /**
+         * コンストラクタ
+         * 
+         * @param mes メッセージ
+         */
+        TimeoutException(String mes) {
+            super(mes);
+        }
+    }
+    
+    class GetResponseThread extends Thread {
+        private int index;
+
+        GetResponseThread(int index) {
+            this.index = index;
+        }
+
+        public void run() {
+            try {
+                getOutput(index);
+            } catch (IOException e) {
+                e.printStackTrace();
+                // outputException = e;
+            }
+        }
+    }
+    
     class Result {
         String[] names;
         int hit;
@@ -419,3 +494,4 @@ class ErrorReader extends Thread {
         }
     }
 }
+
