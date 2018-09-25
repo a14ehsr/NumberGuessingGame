@@ -1,12 +1,12 @@
-package src.main.java.sample_ai.attack;
+package ac.a14ehsr.sample_ai.defence;
 import java.util.Scanner;
-public class A_SameAsk{
+public class D_RandomDeclare{
 	int min;       //Minimum usable value (inclusive)
 	int max;       //Maximum usable value (inclusive)
 	int gameNum;   //Number of games
 	int roundNum;  //Maximum number of rounds per game
 	int changeLimit; //Minimum number of times to change
-	String playerName = "A_SameAsk";
+	String playerName = "D_RandomDeclare";
 	Scanner sc;
 
 	private void run(){
@@ -14,16 +14,15 @@ public class A_SameAsk{
 		init();
 		int[][][] record = new int[gameNum][roundNum][2];
 		for(int g=0; g<gameNum; g++){
-			int askNum = (int) (Math.random() * (max - min)) + min;
+			int myNum = (int) (Math.random() * (max - min)) + min;
+			int c_time = (int)(Math.random()*10);
 			for(int r=0; r<roundNum; r++){
-				record[g][r][0] = askNum;
-				System.out.println(askNum);
-				// 1 : if the predicted value is larger than the partner's number,
-				//-1 : if it is smaller,
-				// 0 : if it matches
-				int ud = sc.nextInt(); 
-				record[g][r][1] = ud;
-				if(ud == 0) break;
+				if (r>0 && r%10 == c_time) myNum = (int) (Math.random() * (max - min)) + min;
+				record[g][r][0] = myNum;
+				System.out.println(myNum);
+				int num = sc.nextInt(); //attack number
+				record[g][r][1] = num;
+				if(myNum == num) break;
 			}
 		}
 		sc.close();
@@ -37,7 +36,8 @@ public class A_SameAsk{
 		changeLimit = sc.nextInt();
 		System.out.println(playerName);
 	}
+
 	public static void main(String[] args) {
-		(new A_SameAsk()).run();
+		(new D_RandomDeclare()).run();
 	}
 }

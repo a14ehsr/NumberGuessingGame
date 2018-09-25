@@ -4,7 +4,7 @@
 //  Created by Hirano Keisuke on 2018/06/01.
 //  Copyright © 2018年 Hirano Keisuke. All rights reserved.
 //
-package src.main.java.platform;
+package ac.a14ehsr.platform;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -287,7 +287,7 @@ public class NumberGuessingGame {
         // リザルト出力用ファイルの準備
         FileWriter file = null;
         try {
-            file = new FileWriter("src/main/resource/result/result.csv");
+            file = new FileWriter("resource/result/result.csv");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -317,12 +317,12 @@ public class NumberGuessingGame {
         List<String> sampleAttackCommandList = setting.getSampleAttackCommand();
         List<String> sampleDefenceCommandList = setting.getSampleDefenceCommand();
         Logger testRunLogger = Logger.getLogger(NumberGuessingGame.class.getName());
-        loggerInit(testRunLogger, "src/main/resource/log/test_run_err/err.log");
+        loggerInit(testRunLogger, "resource/log/test_run_err/err.log");
 
         // 実行コマンド出力ファイルの準備
         FileWriter file = null;
         try {
-            file = new FileWriter("src/main/resource/command_list/attack/attack_command_list_green.txt");
+            file = new FileWriter("resource/command_list/attack/attack_command_list_green.txt");
         } catch (Exception e) {
             e.printStackTrace();
         }    
@@ -356,7 +356,7 @@ public class NumberGuessingGame {
 
         // 実行コマンド出力ファイルの準備
         try {
-            file = new FileWriter("src/main/resource/command_list/defence/defence_command_list_green.txt");
+            file = new FileWriter("resource/command_list/defence/defence_command_list_green.txt");
         } catch (Exception e) {
             e.printStackTrace();
         }
