@@ -9,7 +9,7 @@ def find_all_files(directory):
         for file in files:
             yield os.path.join(root, file)
 
-compiler_setting_file = open('src/main/resource/setting/compiler_setting.txt','r')
+compiler_setting_file = open('resource/setting/compiler_setting.txt','r')
 #for line in compiler_setting_file:
 #  print(line)
 lines = compiler_setting_file.readlines()
@@ -29,7 +29,7 @@ compiler_setting_file.close()
 print('.cコンパイラ  :'+c_compiler)
 print('.cppコンパイラ:'+cpp_compiler)
 
-path = 'src/main/resource/command_list/'
+path = 'resource/command_list/'
 attack_cmd_file = open(path+'attack/attack_command_list.txt', mode='w')
 defence_cmd_file = open(path+'defence/defence_command_list.txt', mode='w')
 errf = open('src/main/resource/log/auto_compile/compile_err_list.txt', mode = 'w')
@@ -144,9 +144,9 @@ def identify_with_name(file):
 		output_file.write(runcmd + '\n')
 
 
-for file in find_all_files('./src/main/ai_program/attack'):
+for file in find_all_files('./ai_program/attack'):
 	attack_compile(file)
-for file in find_all_files('./src/main/ai_program/defence'):
+for file in find_all_files('./ai_program/defence'):
 	defence_compile(file)
-for file in find_all_files('./src/main/ai_program/other'):
+for file in find_all_files('./ai_program/other'):
 	identify_with_name(file)

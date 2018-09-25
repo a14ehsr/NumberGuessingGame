@@ -1,0 +1,6 @@
+./src/main/ai_program/other/imahori_lab/A_Hisatake
+java -classpath ./src/main/ai_program/other/imahori_lab A_Watanabe
+java -classpath ./src/main/ai_program/other/imahori_lab A_Tane
+java -classpath ./src/main/ai_program/other/imahori_lab A_Nagai
+java -classpath ./src/main/ai_program/other/imahori_lab A_Yoshida
+java -classpath ./src/main/ai_program/other/imahori_lab A_Adachi
