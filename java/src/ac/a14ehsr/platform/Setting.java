@@ -2,9 +2,6 @@ package ac.a14ehsr.platform;
 
 import java.io.PrintWriter;
 import java.util.Scanner;
-
-
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -32,7 +29,7 @@ class Setting {
      * デフォルトコンストラクタ
      * コマンドのリストの準備と設定ファイル読み込み
      */
-    Setting(){
+    Setting() {
         isTest = false;
         attackCommand = new ArrayList<>();
         defenceCommand = new ArrayList<>();
@@ -112,9 +109,7 @@ class Setting {
      * 
      * @throws Exception 設定ファイルの様式違いやその他のException
      */
-    void defaultSetting() throws Exception{
-        String t = new File(".").getAbsoluteFile().getParent();
-        System.out.println(t);
+    void defaultSetting() throws Exception {
         String settingFilePath = "resource/setting/setting.txt";
         Scanner sc = null;
         try {
@@ -165,7 +160,7 @@ class Setting {
      * 
      * @param args コマンドライン引数
      */
-    void start(final String[] args){
+    void start(final String[] args) {
         boolean successed = false;
         if (args.length > 0) {
             try {
@@ -199,6 +194,16 @@ class Setting {
             switch (options[i]) {
             case "-a":
                 attackCommand.add(options[i + 1]);
+                break;
+
+            case "-as":
+                attackCommand.add(options[i + 1]);
+                defenceCommand.addAll(sampleDefenceCommand);
+                break;
+
+            case "-ds":
+                defenceCommand.add(options[i + 1]);
+                attackCommand.addAll(sampleAttackCommand);
                 break;
 
             case "-d":

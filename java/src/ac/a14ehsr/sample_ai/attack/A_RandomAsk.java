@@ -1,4 +1,5 @@
 package ac.a14ehsr.sample_ai.attack;
+
 import java.util.Scanner;
 public class A_RandomAsk{
 	int min;       //Minimum usable value (inclusive)
