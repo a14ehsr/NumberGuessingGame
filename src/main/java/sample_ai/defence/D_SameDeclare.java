@@ -1,4 +1,4 @@
-package src.main.java.test_ai.defence;
+package src.main.java.sample_ai.defence;
 import java.util.Scanner;
 public class D_SameDeclare{
 	int min;       //Minimum usable value (inclusive)

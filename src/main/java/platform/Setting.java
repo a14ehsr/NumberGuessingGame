@@ -48,10 +48,10 @@ class Setting {
             System.exit(0);
         }
 
-        sampleAttackCommand.add("java src.main.java.test_ai.attack.A_RandomAsk");
-        sampleAttackCommand.add("java src.main.java.test_ai.attack.A_SameAsk");
-        sampleDefenceCommand.add("java src.main.java.test_ai.defence.D_RandomDeclare");
-        sampleDefenceCommand.add("java src.main.java.test_ai.defence.D_SameDeclare");
+        sampleAttackCommand.add("java src.main.java.sample_ai.attack.A_RandomAsk");
+        sampleAttackCommand.add("java src.main.java.sample_ai.attack.A_SameAsk");
+        sampleDefenceCommand.add("java src.main.java.sample_ai.defence.D_RandomDeclare");
+        sampleDefenceCommand.add("java src.main.java.sample_ai.defence.D_SameDeclare");
     }
 
     List<String> getAttackCommand() {
