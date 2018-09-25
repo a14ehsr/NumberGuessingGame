@@ -1,5 +1,0 @@
-java -classpath ./src/main/ai_program/other/imahori_lab D_Hashimoto
-python ./src/main/ai_program/other/imahori_lab/D_Masuda.py
-java -classpath ./src/main/ai_program/other/imahori_lab D_Miura
-java -classpath ./src/main/ai_program/other/imahori_lab D_Yasuoka
-java -classpath ./src/main/ai_program/other/imahori_lab D_Seta

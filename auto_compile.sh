@@ -1,3 +1,3 @@
 #!/bin/sh
 
-python src/main/python/auto_compile/auto_compile.py
+python python/src/auto_compile/auto_compile.py

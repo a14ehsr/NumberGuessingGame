@@ -7,5 +7,4 @@ if [ $# -ne 2 ]; then
 fi
 echo $1
 echo $2
-java src.main.java.platform.NumberGuessingGame -a "$1" -d "$2"
-
+java -classpath java/src ac.a14ehsr.platform.NumberGuessingGame -a "$1" -d "$2"

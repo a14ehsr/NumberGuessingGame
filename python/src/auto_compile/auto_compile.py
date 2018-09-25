@@ -32,7 +32,7 @@ print('.cppコンパイラ:'+cpp_compiler)
 path = 'resource/command_list/'
 attack_cmd_file = open(path+'attack/attack_command_list.txt', mode='w')
 defence_cmd_file = open(path+'defence/defence_command_list.txt', mode='w')
-errf = open('src/main/resource/log/auto_compile/compile_err_list.txt', mode = 'w')
+errf = open('resource/log/auto_compile/compile_err_list.txt', mode = 'w')
 cmdlist = []
 
 def attack_compile(file):
@@ -144,9 +144,9 @@ def identify_with_name(file):
 		output_file.write(runcmd + '\n')
 
 
-for file in find_all_files('./ai_program/attack'):
+for file in find_all_files('./ai_programs/attack'):
 	attack_compile(file)
-for file in find_all_files('./ai_program/defence'):
+for file in find_all_files('./ai_programs/defence'):
 	defence_compile(file)
-for file in find_all_files('./ai_program/other'):
+for file in find_all_files('./ai_programs/other'):
 	identify_with_name(file)

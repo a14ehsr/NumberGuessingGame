@@ -1,3 +1,3 @@
 #!/bin/sh
 
-java src.main.java.platform.NumberGuessingGame -test 10
+java -classpath java/src ac.a14ehsr.platform.NumberGuessingGame -test 10
