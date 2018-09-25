@@ -1,4 +1,4 @@
-package src.main.java.platform;
+package ac.a14ehsr.platform;
 
 import java.io.PrintWriter;
 import java.util.Scanner;
@@ -48,10 +48,10 @@ class Setting {
             System.exit(0);
         }
 
-        sampleAttackCommand.add("java src.main.java.sample_ai.attack.A_RandomAsk");
-        sampleAttackCommand.add("java src.main.java.sample_ai.attack.A_SameAsk");
-        sampleDefenceCommand.add("java src.main.java.sample_ai.defence.D_RandomDeclare");
-        sampleDefenceCommand.add("java src.main.java.sample_ai.defence.D_SameDeclare");
+        sampleAttackCommand.add("java -classpath java/src/ ac.a14ehsr.sample_ai.attack.A_RandomAsk");
+        sampleAttackCommand.add("java -classpath java/src/ ac.a14ehsr.sample_ai.attack.A_SameAsk");
+        sampleDefenceCommand.add("java -classpath java/src/ ac.a14ehsr.sample_ai.defence.D_RandomDeclare");
+        sampleDefenceCommand.add("java -classpath java/src/ ac.a14ehsr.sample_ai.defence.D_SameDeclare");
     }
 
     List<String> getAttackCommand() {
@@ -113,7 +113,9 @@ class Setting {
      * @throws Exception 設定ファイルの様式違いやその他のException
      */
     void defaultSetting() throws Exception{
-        String settingFilePath = "src/main/resource/setting/setting.txt";
+        String t = new File(".").getAbsoluteFile().getParent();
+        System.out.println(t);
+        String settingFilePath = "resource/setting/setting.txt";
         Scanner sc = null;
         try {
             sc = new Scanner(new File(settingFilePath));    
@@ -230,8 +232,8 @@ class Setting {
                 break;
 
             case "-auto":
-                readCommandList(attackCommand, "src/main/resource/command_list/attack/attack_command_list_green.txt");
-                readCommandList(defenceCommand, "src/main/resource/command_list/defence/defence_command_list_green.txt");
+                readCommandList(attackCommand, "resource/command_list/attack/attack_command_list_green.txt");
+                readCommandList(defenceCommand, "resource/command_list/defence/defence_command_list_green.txt");
                 /*
                 // サンプルはとりあえずなし
                 if("true".equals(options[i + 1])){
@@ -244,9 +246,9 @@ class Setting {
                 gameNum = Integer.parseInt(options[i + 1]);
                 isTest = true;
                 readCommandList(attackCommand,
-                        "src/main/resource/command_list/attack/attack_command_list.txt");
+                        "resource/command_list/attack/attack_command_list.txt");
                 readCommandList(defenceCommand,
-                        "src/main/resource/command_list/defence/defence_command_list.txt");
+                        "resource/command_list/defence/defence_command_list.txt");
                 outputLevel = 0;
                 break;
             default:
