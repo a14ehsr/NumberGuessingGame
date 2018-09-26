@@ -1,15 +1,13 @@
 #include <iostream>
+
 void init();
-int ask(int game,int round,int*** record);
 int min;       //Minimum usable value (inclusive)
 int max;       //Maximum usable value (inclusive)
 int gameNum;   //Number of games
 int roundNum;  //Maximum number of rounds per game
 int changeLimit; //Minimum number of times to change
-std::string playerName = "playerCppAtk";
-int ask(int game,int round,int*** record){
-	return rand()%max+ min;
-}
+std::string playerName = "A_CPPSample";
+
 int main(void) {
 	init();
 	int ***record = new int**[gameNum];
@@ -19,9 +17,16 @@ int main(void) {
 			record[i][j] = new int[2];
 		}
 	}
-	for(int i=0; i<gameNum; i++){
-		for(int j=0; j<roundNum; j++){
-			int askNum = ask(i,j,record);
+	for (int i = 0; i < gameNum; i++) {
+		for (int j = 0; j < roundNum; j++) {
+			// ============== 書き換え箇所 ここから ===============
+			// askNumに聞きたい数字を代入する．
+			// sampleでは毎回ランダムに質問する．
+			int askNum = rand() % max + min;
+
+
+
+			// ============== 書き換え箇所 ここまで ===============
 			record[i][j][0] = askNum;
 			std::cout << askNum << std::endl;
 			int ud;

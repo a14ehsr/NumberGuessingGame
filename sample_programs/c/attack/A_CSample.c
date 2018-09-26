@@ -3,14 +3,8 @@
 #include <time.h>
 
 void init();
-int ask(int game,int round,int*** record);
-char *playerName = "playerCAttack";
+char *playerName = "A_CSample";
 
-
-int ask(int game,int round,int*** record){
-	return rand()%100 + 1;
-	//return 1;
-}
 int main(void) {
 	//srand((unsigned) time(NULL));
 	init();
@@ -21,9 +15,14 @@ int main(void) {
 			record[i][j] = malloc(sizeof(int ) * 2);
 		}
 	}
-	for(int i=0; i<100; i++){
-		for(int j=0; j<100; j++){
-			int askNum = ask(i,j,record);
+	for(int i = 0; i < 100; i++) {
+		for(int j = 0; j < 100; j++) {
+			// ============== 書き換え箇所 ここから ===============
+			// askNumに聞きたい数字を代入する．
+			// sampleでは毎回ランダムに質問する．
+			int askNum = rand() % 100 + 1;
+
+			// ============== 書き換え箇所 ここまで ===============
 			record[i][j][0] = askNum;
 			fprintf(stdout,"%d\n",askNum);
 			fflush(stdout);

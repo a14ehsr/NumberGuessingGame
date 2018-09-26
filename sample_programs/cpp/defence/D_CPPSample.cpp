@@ -1,19 +1,12 @@
 #include <iostream>
+
 void init();
-int ask(int game,int round,int*** record);
 int min;       //Minimum usable value (inclusive)
 int max;       //Maximum usable value (inclusive)
 int gameNum;   //Number of games
 int roundNum;  //Maximum number of rounds per game
 int changeLimit; //Minimum number of times to change
-std::string playerName = "playerCppAtk";
-int myNumber(int game,int round,int*** record){
-	if(round == 0){
-		return rand()%max + min;
-	}else{
-		return record[game][round - 1][0];
-	}
-}
+std::string playerName = "D_CPPSample";
 
 int main(void) {
 	init();
@@ -26,7 +19,15 @@ int main(void) {
 	}
 	for(int i=0; i<gameNum; i++){
 		for(int j=0; j<roundNum; j++){
-			int myNum = myNumber(i,j,record);
+			// ============== 書き換え箇所 ここから ===============
+			// myNumに数字を代入する．
+			// sampleでは最初のラウンドでランダムに入力し，それ以降は常に同じ数字とする．
+			int myNum = rand() % max + min;
+			if (j != 0) {
+				myNum = record[i][j - 1][0];
+			}
+
+			// ============== 書き換え箇所 ここまで ===============
 			record[i][j][0] = myNum;
 			std::cout << myNum << std::endl;
 			int num;

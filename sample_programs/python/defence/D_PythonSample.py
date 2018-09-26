@@ -16,7 +16,7 @@ for g in range(gameNum):
 		# myNumに数字を代入する．
 		# sampleでは最初のラウンドでランダムに入力し，それ以降は常に同じ数字とする．
 		myNum = random.randrange(min, max+1)
-		if r == 0 :
+		if r != 0 :
 			myNum = record[g][r - 1][0]
 
 
