@@ -1,16 +1,12 @@
 import java.util.Scanner;
-public class Attack{
+public class A_JavaSample{
 	int min;       //Minimum usable value (inclusive)
 	int max;       //Maximum usable value (inclusive)
 	int gameNum;   //Number of games
 	int roundNum;  //Maximum number of rounds per game
 	int changeLimit; //Minimum number of times to change
-	String playerName = "Attack";
+	String playerName = "A_JavaSample";
 	Scanner sc;
-
-	private int ask(int game,int round,int[][][] record){
-		return (int)(Math.random()*(max - min)) + min;
-	}
 
 	private void run(){
 		sc = new Scanner(System.in);
@@ -18,7 +14,16 @@ public class Attack{
 		int[][][] record = new int[gameNum][roundNum][2];
 		for(int g=0; g<gameNum; g++){
 			for(int r=0; r<roundNum; r++){
-				int askNum = ask(g,r,record);
+				// ============== 書き換え箇所 ここから ===============
+				// askNumに聞きたい数字を代入する．
+				// sampleでは毎回ランダムに質問する．
+				int askNum = (int)(Math.random()*(max - min)) + min;
+				
+				
+				
+				
+				
+				// ============== 書き換え箇所 ここまで ===============
 				record[g][r][0] = askNum;
 				System.out.println(askNum);
 				// 1 : if the predicted value is larger than the partner's number,
@@ -41,6 +46,6 @@ public class Attack{
 		System.out.println(playerName);
 	}
 	public static void main(String[] args) {
-		(new Attack()).run();
+		(new A_JavaSample()).run();
 	}
 }
