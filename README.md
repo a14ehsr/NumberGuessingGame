@@ -14,6 +14,7 @@ Copyright © 2018年 K.Hirano All rights reserved.
 ターミナルで以下を実行  
 `cd NumberGuessingGame`
 
+
 ## 2. AIプログラムの準備
 ### 2.1 サンプルプログラム
 sample_programs/c/にサンプルプログラムを用意しています．  
