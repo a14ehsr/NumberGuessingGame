@@ -10,6 +10,8 @@ Copyright © 2018年 K.Hirano All rights reserved.
 ターミナルで以下を実行  
 `git clone https://github.com/a14ehsr/NumberGuessingGame.git`
 
+もしくはdownload zipからダウンロードしてホームディレクトリ上に解凍してください．  
+
 ### 1.2 作業ディレクトリを移動しよう
 ターミナルで以下を実行  
 `cd NumberGuessingGame`
@@ -71,10 +73,7 @@ playerNameを書き換えてください．授業などで使う時には何か�
 
 --------------
 
-# 運営担当者向けのREADMEと細かな補足
-
-09/26 書き換え中
-
+# 運営担当者向けの細かな補足
 ## 動作確認済み環境
 ### Java
 ~~~
@@ -93,16 +92,29 @@ MacBookPro 2017 macOS 10.13.4
 ~~~
 
 ### 補足
-Java, Pythonのバージョン違いによる動作の可否は未確認です．
-また，Windows環境での実行方法なども不明瞭ですが，よくある例として，Javaプログラムのコンパイル時にエンコードの指定を行わないとエラーになるなどがあります．
-Linux等ではMacと同じように実行できると思います．
+Java, Pythonのバージョン違いによる動作の可否は未確認です．  
+また，Windows環境での実行方法なども不明瞭ですが，よくある例として，  
+Javaプログラムのコンパイル時にエンコードの指定を行わないとエラーになる，などがあります．
 
 ## コンパイル
-`javac src/main/java/platform/NumberGuessingGame.java`
 
+`sh compile.sh`の内容は以下を実行する形になっています．  
+
+~~~
+cd java/src/
+
+javac ac/a14ehsr/platform/NumberGuessingGame.java
+
+javac ac/a14ehsr/sample_ai/attack/A_RandomAsk.java
+javac ac/a14ehsr/sample_ai/attack/A_SameAsk.java
+javac ac/a14ehsr/sample_ai/defence/D_RandomDeclare.java
+javac ac/a14ehsr/sample_ai/defence/D_SameDeclare.java
+~~~
 
 ## 実行
-`java src.main.java.platform.NumberGuessingGame -a "攻撃側実行コマンド" -d "防御側実行コマンド"`
+~~~
+java -classpath java/src ac.a14ehsr.platform.NumberGuessingGame -a "攻撃側実行コマンド" -d "防御側実行コマンド"
+~~~
 
 `-a` の後ろにスペースを開けて実行コマンドを入力することで対戦に使用する攻撃側プレイヤーのプログラムを指定できます．  
 `-d` の後ろにスペースを開けて実行コマンドを入力することで対戦に使用する防御側プレイヤーのプログラムを指定できます．  
@@ -111,6 +123,11 @@ Linux等ではMacと同じように実行できると思います．
 C系言語の場合には,`"./a.out"`  
 pythonの場合には，`"python Attack.py"`  
 などを実行コマンドに使えます．  
+細かなオプションを使用しない場合には以下のコマンドでも実行できます
+
+~~~
+sh battle.sh "攻撃側実行コマンド" "防御側実行コマンド"
+~~~
 
 ### ゲーム設定の変更
 
@@ -135,25 +152,33 @@ pythonの場合には，`"python Attack.py"`
 コンパイル処理はPythonで実装しています．
 
 ### 手順概要
-1. src/main/ai_programs/ に使用するプログラムを配置する．  
-ディレクトリ内部を再帰的に探索して実行ファイルを取得するので，  
-ディレクトリなども適当な構成で問題ありません．
+1. `ai_programs/`に使用するプログラムを配置する．  
+  - 攻撃側AIなら`ai_programs/attack/`以下に
+  - 防御側AIなら`ai_programs/defence/`以下に
+  - プログラム名が"サンプルプログラムについて"にある通りの規則に従っているなら`ai_programs/other/`以下に
+  - ディレクトリ内部を再帰的に探索して実行ファイルを取得するので，ディレクトリなどは適当な構成で問題ありません．
 2. pythonでの自動コンパイル
 3. サンプルとの対戦により実行時エラーをふるいにかける
 4. 対戦の実行
 
 ### 実行方法
 2. 自動コンパイル  
-`python src/main/python/auto_compile/auto_compile.py`
+`python python/src/auto_compile/auto_compile.py`  
+もしくは  
+`sh auto_compile.sh`
 
 3. サンプルとの対戦  
-`java src.main.java.platform.NumberGuessingGame -test 10`  
+`java -classpath java/src ac.a14ehsr.platform.NumberGuessingGame -test 10`  
 `-test`以下の数字はサンプルとの対戦のゲーム数です．  
-既定の100回だと時間がかかるので適宜指定してください．
+既定の100回だと時間がかかるので適宜指定してください．  
+もしくは
+`sh test.sh`
 
 4. 対戦の実行  
 `java src.main.java.platform.NumberGuessingGame -auto bool`  
-`bool`には，trueかfalseを入れてください．
+もしくは  
+`sh auto_run.sh`  
+`bool`には，trueかfalseを入れてください．  
   - ~~true :サンプルを含めて対戦~~  
   - false:サンプルは含めず対戦
 
@@ -179,38 +204,20 @@ nゲーム*mラウンド分，ループを回して実装しています．
 - Python
 
 ##  AIプログラムの準備
-
-
-### サンプルプログラムの変更箇所について
-src/main/sample_programs内のサンプルプログラムの以下を書き換えてください．  
+`sample_programs/`内のサンプルプログラムの指定した箇所を書き換えてください．  
 それ以外の部分を書き換えると，うまく動かない可能性があります．
 
-#### 攻防共通の変更
+### 指定箇所以外の変更について
 - ファイル名を変えてください．`A_`から始まるものを攻撃側プログラム，`D_`から始まるものを防御側プログラムとして実行します．
   - javaの場合にはファイル名とクラス名を合わせるように気をつけてください．
 - playerNameを書き換えてください．授業などで使う時には学籍番号などを推奨します．  
-- __標準出力は使わないでください．__
-  - 出力を行いたい場合には，標準エラー出力（System.err.print(),std::cerr）などを使用してください．
 
-#### 攻撃側:ask
-askの引数は以下の通りです．
+### __注意事項__
+__標準出力は使わないでください．__  
+出力を行いたい場合には，標準エラー出力（System.err.print(),std::cerr）などを使用してください．
 
-- game      :何回目のゲームか(0以上gameNum未満）
-- round     :何回目のラウンドか(0以上roundNum未満）
-- record    :gameNum × roundNum × 2の3次元配列．
-  - record[i][j][0]はiゲーム目のjラウンドに自分が聞いた数
-  - record[i][j][1]はiゲーム目のjラウンドに自分が聞いた数が相手の数より上なら1，下なら-1，一致したなら0が入力されています．
 
-#### 防御側:myNumber
-myNumberの引数は以下の通りです．
-
-- game      :何回目のゲームか(0以上gameNum未満）
-- round     :何回目のラウンドか(0以上roundNum未満）
-- record    :gameNum × roundNum × 2の3次元配列．
-  - record[i][j][0]はiゲーム目のjラウンドに自分が出した数．
-  - record[i][j][1]はiゲーム目のjラウンドに相手が聞いた数．
-
-#### 参照可能な共通の変数
+### 参照可能な共通の変数
 |変数名      |説明                  |
 |-----------|----------------------|
 |gameNum    |ゲーム数               |
