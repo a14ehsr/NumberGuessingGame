@@ -29,9 +29,7 @@ public class NumberGuessingGame {
     OutputStream[] outputStreams;
     BufferedReader[] bufferedReaders;
     Setting setting;
-
     int min,max,change;
-
     String[] outputStr;
 
     int timeout = 5000;
