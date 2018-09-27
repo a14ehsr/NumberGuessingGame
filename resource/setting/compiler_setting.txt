@@ -1,2 +1,2 @@
 .c cc
-.cpp g++-7
+.cpp g++

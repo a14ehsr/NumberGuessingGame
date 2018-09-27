@@ -19,8 +19,8 @@ Copyright © 2018年 K.Hirano All rights reserved.
 ### 2.1 サンプルプログラム
 sample_programs/c/にサンプルプログラムを用意しています．  
 以下を実行してカレントディレクトリにコピーを作成しましょう．  
-`cp sample_programs/c/attack/A_CSample.c A_自分の名前`  
-`cp sample_programs/c/defence/D_CSample.c D_自分の名前`  
+`cp sample_programs/c/attack/A_CSample.c A_自分の名前.c`  
+`cp sample_programs/c/defence/D_CSample.c D_自分の名前.c`  
 自分の名前にはローマ字などで適宜自分の名字などを入力してください．
 
 ### 2.2 AIの作り方．
