@@ -44,11 +44,12 @@ class Setting {
             e.printStackTrace();
             System.exit(0);
         }
-
-        sampleAttackCommand.add("java -classpath java/src/ ac.a14ehsr.sample_ai.attack.A_RandomAsk");
-        sampleAttackCommand.add("java -classpath java/src/ ac.a14ehsr.sample_ai.attack.A_SameAsk");
-        sampleDefenceCommand.add("java -classpath java/src/ ac.a14ehsr.sample_ai.defence.D_RandomDeclare");
-        sampleDefenceCommand.add("java -classpath java/src/ ac.a14ehsr.sample_ai.defence.D_SameDeclare");
+        
+        String common = "java -classpath java/src/ ac.a14ehsr.sample_ai.";
+        sampleAttackCommand.add(common+"attack.A_RandomAsk");
+        sampleAttackCommand.add(common+"attack.A_SameAsk");
+        sampleDefenceCommand.add(common+"defence.D_RandomDeclare");
+        sampleDefenceCommand.add(common+"defence.D_SameDeclare");
     }
 
     List<String> getAttackCommand() {
