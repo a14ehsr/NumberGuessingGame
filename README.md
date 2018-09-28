@@ -41,8 +41,8 @@ playerNameを書き換えてください．授業などで使う時には何か�
 ### 3.2 サンプルと戦わせる
 サンプルプログラムと対戦させます．  
 以下のコマンドを実行してください.  
-攻撃側の場合:`sh battle_sample.sh attack "実行コマンド`  
-防御側の場合:`sh battle_sample.sh defence "実行コマンド`  
+攻撃側の場合:`sh battle_sample.sh attack "実行コマンド"`  
+防御側の場合:`sh battle_sample.sh defence "実行コマンド"`  
 実行コマンドには`./a.out`などを入力してください．  
 
 サンプルは以下の内容です．
