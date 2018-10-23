@@ -46,10 +46,10 @@ class Setting {
         }
         
         String common = "java -classpath java/src/ ac.a14ehsr.sample_ai.";
-        sampleAttackCommand.add(common+"attack.A_RandomAsk");
         sampleAttackCommand.add(common+"attack.A_SameAsk");
-        sampleDefenceCommand.add(common+"defence.D_RandomDeclare");
+        sampleAttackCommand.add(common + "attack.A_RandomAsk");
         sampleDefenceCommand.add(common+"defence.D_SameDeclare");
+        sampleDefenceCommand.add(common + "defence.D_RandomDeclare");
     }
 
     List<String> getAttackCommand() {
