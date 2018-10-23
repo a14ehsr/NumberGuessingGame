@@ -26,9 +26,9 @@ public class A_JavaSample{
 				// ============== 書き換え箇所 ここまで ===============
 				record[g][r][0] = askNum;
 				System.out.println(askNum);
-				// 1 : if the predicted value is larger than the partner's number,
-				//-1 : if it is smaller,
-				// 0 : if it matches
+				// -1 : if the predicted value is larger than the partner's number.
+				// 1  : if it is smaller.
+				// 0  : if it matches.
 				int ud = sc.nextInt(); 
 				record[g][r][1] = ud;
 				if(ud == 0) break;

@@ -163,7 +163,10 @@ public class NumberGuessingGame {
                 }
                 //System.err.println("!"+count+"");
 
-                // 一致か確認
+                // 攻撃側が防御側より上ならば，もっと下にするべきという意味で，ud=-1
+                // 攻撃側が防御側より下ならば，もっと上にするべきという意味で，ud=1
+                // 攻撃側と防御側が一致したならば，ぴったり一致という意味で，ud=0
+                // とする．
                 int ud;
                 if (num[0] == num[1]) {
                     ud = 0;
@@ -199,7 +202,7 @@ public class NumberGuessingGame {
 
         }
         if (outputLevel > 0) {
-            System.out.printf("%3d/%d average = %f\n", hit, n, ((double) hitRoundSum / hit));
+            System.out.printf("hit回数/ゲーム数 = %3d/%d  |  hitのaverage = %f\n", hit, n, ((double) hitRoundSum / hit));
         }
         return new Result(names, hit, hitRoundSum);
     }
@@ -272,6 +275,9 @@ public class NumberGuessingGame {
         result(attackNames, defenceNames, resultTable);
     }
 
+    /**
+     * リザルトの出力
+     */
     private void result(String[] attackNames, String[] defenceNames, double[][] score) {
         System.out.println("RESULT");
         for (int i = 0; i < attackNames.length; i++) {
@@ -441,6 +447,9 @@ public class NumberGuessingGame {
         }
     }
     
+    /**
+     * 数値の取得用Thread
+     */
     class GetResponseThread extends Thread {
         private int index;
 
@@ -458,6 +467,9 @@ public class NumberGuessingGame {
         }
     }
     
+    /**
+     * リザルト用のEntity
+     */
     class Result {
         String[] names;
         int hit;
@@ -471,6 +483,9 @@ public class NumberGuessingGame {
     }
 }
 
+/**
+ * エラー出力のReader
+ */
 class ErrorReader extends Thread {
     InputStream error;
 
