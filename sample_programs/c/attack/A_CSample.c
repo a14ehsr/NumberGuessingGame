@@ -6,7 +6,11 @@ void init();
 char *playerName = "A_CSample";
 
 int main(void) {
-	//srand((unsigned) time(NULL));
+	// ======= 使いたい変数を宣言 =======
+
+
+
+	// ===============================
 	init();
 	int ***record = malloc(sizeof(int **) * 100);
 	for (int i=0; i<100; i++) {
@@ -15,14 +19,29 @@ int main(void) {
 			record[i][j] = malloc(sizeof(int ) * 2);
 		}
 	}
+
+	/** 二重ループの説明
+	 * iのループ:第iゲームを実行する
+	 * jのループ:第jラウンドを実行する
+	 **/
+	//srand((unsigned) time(NULL));
 	for(int i = 0; i < 100; i++) {
+		// ============== 書き換え箇所A ここから ===============
+
+
+
+		// ============== 書き換え箇所A ここまで ===============
+
 		for(int j = 0; j < 100; j++) {
-			// ============== 書き換え箇所 ここから ===============
+			
+			// ============== 書き換え箇所B ここから ===============
 			// askNumに聞きたい数字を代入する．
 			// sampleでは毎回ランダムに質問する．
 			int askNum = rand() % 100 + 1;
 
-			// ============== 書き換え箇所 ここまで ===============
+
+			// ============== 書き換え箇所B ここまで ===============
+
 			record[i][j][0] = askNum;
 			fprintf(stdout,"%d\n",askNum);
 			fflush(stdout);
@@ -38,6 +57,7 @@ int main(void) {
 	return 0;
 }
 void init() {
+	// パラメータを破棄する
 	int tmp;
 	scanf("%d",&tmp);
 	scanf("%d",&tmp);
