@@ -202,7 +202,7 @@ public class NumberGuessingGame {
 
         }
         if (outputLevel > 0) {
-            System.out.printf("%3d/%d average = %f\n", hit, n, ((double) hitRoundSum / hit));
+            System.out.printf("hit回数/ゲーム数 = %3d/%d  |  hitのaverage = %f\n", hit, n, ((double) hitRoundSum / hit));
         }
         return new Result(names, hit, hitRoundSum);
     }
