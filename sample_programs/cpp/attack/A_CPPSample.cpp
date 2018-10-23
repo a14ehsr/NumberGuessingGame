@@ -31,9 +31,9 @@ int main(void) {
 			std::cout << askNum << std::endl;
 			int ud;
 			std::cin >> ud;
-			// 1 : if the predicted value is larger than the partner's number,
-			//-1 : if it is smaller,
-			// 0 : if it matches
+			// -1 : if the predicted value is larger than the partner's number.
+			//  1 : if it is smaller.
+			//  0 : if it matches.
 			record[i][j][1] = ud;
 			if(ud == 0) break;
 		}
