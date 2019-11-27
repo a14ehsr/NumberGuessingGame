@@ -25,6 +25,8 @@ class Setting {
     private int minNumber;
     private int maxNumber;
     private int change;
+
+    private boolean isVsResult;
     /**
      * デフォルトコンストラクタ
      * コマンドのリストの準備と設定ファイル読み込み
@@ -35,7 +37,7 @@ class Setting {
         defenceCommand = new ArrayList<>();
         sampleAttackCommand = new ArrayList<>();
         sampleDefenceCommand = new ArrayList<>();
-
+        isVsResult = false;
         try {
             defaultSetting();  
         } catch (Exception e) {
@@ -103,6 +105,13 @@ class Setting {
 
     int getChange() {
         return change;
+    }
+
+    /**
+     * @return the isVsResult
+     */
+    public boolean isVsResult() {
+        return isVsResult;
     }
 
     /**
@@ -180,7 +189,7 @@ class Setting {
         } else {
             dialogueMode();
         }
-        System.out.println("設定終了");
+        //System.out.println("設定終了");
     }
     
     /**
@@ -255,6 +264,10 @@ class Setting {
                         "resource/command_list/attack/attack_command_list.txt");
                 readCommandList(defenceCommand,
                         "resource/command_list/defence/defence_command_list.txt");
+                outputLevel = 0;
+                break;
+            case "-vs_result":
+                isVsResult = true;
                 outputLevel = 0;
                 break;
             default:

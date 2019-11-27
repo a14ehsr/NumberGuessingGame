@@ -130,15 +130,20 @@ public class NumberGuessingGame {
                 }
                 for (int p = 0; p < 2; p++) {
                     if (!processes[p].isAlive())
-                        throw new IOException("次のプレイヤーのサブプロセスが停止しました :" + names[p]);
-                    if (outputStr[p] == null) throw new TimeoutException("一定時間以内に次のプレイヤーから値を取得できませんでした :"+names[p]);
+                        if (setting.isVsResult()) throw new IOException("ERROR:"+names[p]);
+                        else throw new IOException("次のプレイヤーのサブプロセスが停止しました :" + names[p]);
+                    if (outputStr[p] == null) {
+                        if (setting.isVsResult()) throw new TimeoutException("ERROR:"+names[p]);
+                        else throw new TimeoutException("一定時間以内に次のプレイヤーから値を取得できませんでした :"+names[p]);
+                    }
                 }
                 int[] num = new int[2];
                 for (int p = 0; p < 2; p++) {
                     try {
                         num[p] = Integer.parseInt(outputStr[p]);
                     } catch (NumberFormatException e) {
-                        throw new NumberFormatException("次のプレイヤーから整数以外の値を取得しました :"+names[p]);
+                        if (setting.isVsResult()) throw new NumberFormatException("ERROR:"+names[p]);
+                        else throw new NumberFormatException("次のプレイヤーから整数以外の値を取得しました :"+names[p]);
                     }
                 }
 
@@ -148,12 +153,13 @@ public class NumberGuessingGame {
                 // 範囲内の数字かチェック
                 checkRange(num, names);
 
-                // 防御側の変更制約チェック @TODO テスト
+                // 防御側の変更制約チェック TODO: テスト
                 if (beforeDeffnceNumber == -1) {
                     beforeDeffnceNumber = num[1];
                 } else if ( beforeDeffnceNumber != num[1]) {
                     if (count < 9) {
-                        throw new AgainstTheRulesException("規定回数以内にDefence側の数値が変更されました．");
+                        if (setting.isVsResult()) throw new AgainstTheRulesException("ERROR:"+names[1]);
+                        else throw new AgainstTheRulesException("規定回数以内にDefence側の数値が変更されました．");
                     } else {
                         count = 1;
                         beforeDeffnceNumber = num[1];
@@ -175,8 +181,10 @@ public class NumberGuessingGame {
                 }
 
                 for (int p = 0; p < 2; p++) {
-                    if (!processes[p].isAlive())
-                        throw new IOException("次のプレイヤーのサブプロセスが停止しました :" + names[p]);
+                    if (!processes[p].isAlive()) {   
+                        if (setting.isVsResult()) throw new IOException("ERROR:"+names[p]);
+                        else throw new IOException("次のプレイヤーのサブプロセスが停止しました :" + names[p]);
+                    }
                 }
                 outputStreams[0].write((ud + "\n").getBytes());
                 outputStreams[0].flush();
@@ -245,7 +253,6 @@ public class NumberGuessingGame {
         } else {
             obj.autoRun();
         }
-        
     }
 
     /**
@@ -266,13 +273,21 @@ public class NumberGuessingGame {
                     defenceNames[j] = result.names[1];
                     resultTable[i][j] = ((double)result.hitRoundSum/result.hit);
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    if (setting.isVsResult()) {
+                        System.out.println(e.getMessage());
+                    } else {
+                        e.printStackTrace();
+                    }
                 } finally {
                     processDestroy();
                 }
             }
         }
-        result(attackNames, defenceNames, resultTable);
+        if (setting.isVsResult()) {
+            System.out.println(resultTable[0][0]);
+        } else {
+            result(attackNames, defenceNames, resultTable);
+        }
     }
 
     /**
