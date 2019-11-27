@@ -1,11 +1,9 @@
 package ac.a14ehsr.platform;
 
-import java.io.PrintWriter;
-import java.util.Scanner;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
 
 /**
  * プラットフォームのコマンドライン引数を受け取って諸々の処理をするクラス

@@ -60,6 +60,9 @@ public class NumberGuessingGame {
         Runtime rt = Runtime.getRuntime();
 
         for (int i = 0; i < 2; i++) {
+            String[] tmp = cmd[i].split(":");
+            if (tmp.length > 1) cmd[i] = tmp[1];
+            else cmd[i] = tmp[0];
             processes[i] = rt.exec(cmd[i]);
             outputStreams[i] = processes[i].getOutputStream();
             inputStreams[i] = processes[i].getInputStream();
@@ -205,7 +208,11 @@ public class NumberGuessingGame {
 
             if (outputLevel > 1) {
                 if(j < round) System.out.printf("%3d回目でhit\n",(j+1));
-                else System.out.println("hitならず");   
+                else System.out.println("hitならず");
+            }
+
+            if (j >= round) {
+                hitRoundSum += round;
             }
 
         }
@@ -271,7 +278,7 @@ public class NumberGuessingGame {
                     Result result = run();
                     attackNames[i] = result.names[0];
                     defenceNames[j] = result.names[1];
-                    resultTable[i][j] = ((double)result.hitRoundSum/result.hit);
+                    resultTable[i][j] = ((double)result.hitRoundSum/setting.getRoundNum());
                 } catch (Exception e) {
                     if (setting.isVsResult()) {
                         System.out.println(e.getMessage());

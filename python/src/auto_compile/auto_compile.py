@@ -44,7 +44,7 @@ def attack_compile(file):
 		err = subprocess.call(cmd, shell=True)
 		if err == 0:
 			runcmd = 'java -classpath ' + directory + ' ' + fname
-			output_file.write(runcmd + '\n')
+			output_file.write(directory.split("/")[-1]+":"+runcmd + '\n')
 			#f.write(runcmd+'\n')
 		else:
 			errf.write('COMPILE_ERROR '+file+'\n')
@@ -53,7 +53,7 @@ def attack_compile(file):
 		err = subprocess.call(cmd, shell=True)
 		if err == 0:
 			runcmd = root
-			output_file.write(runcmd + '\n')
+			output_file.write(directory.split("/")[-1]+":"+runcmd + '\n')
 		else:
 			errf.write('COMPILE_ERROR '+file+'\n')
 	elif ext == '.c':
@@ -61,13 +61,13 @@ def attack_compile(file):
 		err = subprocess.call(cmd, shell=True)
 		if err == 0:
 			runcmd = root
-			output_file.write(runcmd + '\n')
+			output_file.write(directory.split("/")[-1]+":"+runcmd + '\n')
 		else:
 			errf.write('COMPILE_ERROR '+file+'\n')
 
 	elif ext == '.py':
 		runcmd = 'python ' + file
-		output_file.write(runcmd + '\n')
+		output_file.write(directory.split("/")[-1]+":"+runcmd + '\n')
 
 def defence_compile(file):
 	root, ext = os.path.splitext(file)
@@ -78,7 +78,7 @@ def defence_compile(file):
 		err = subprocess.call(cmd, shell=True)
 		if err == 0:
 			runcmd = 'java -classpath ' + directory + ' ' + fname
-			output_file.write(runcmd + '\n')
+			output_file.write(directory.split("/")[-1]+":"+runcmd + '\n')
 			#f.write(runcmd+'\n')
 		else:
 			errf.write('COMPILE_ERROR '+file+'\n')
@@ -87,7 +87,7 @@ def defence_compile(file):
 		err = subprocess.call(cmd, shell=True)
 		if err == 0:
 			runcmd = root
-			output_file.write(runcmd + '\n')
+			output_file.write(directory.split("/")[-1]+":"+runcmd + '\n')
 		else:
 			errf.write('COMPILE_ERROR '+file+'\n')
 	elif ext == '.c':
@@ -95,13 +95,13 @@ def defence_compile(file):
 		err = subprocess.call(cmd, shell=True)
 		if err == 0:
 			runcmd = root
-			output_file.write(runcmd + '\n')
+			output_file.write(directory.split("/")[-1]+":"+runcmd + '\n')
 		else:
 			errf.write('COMPILE_ERROR '+file+'\n')
 
 	elif ext == '.py':
 		runcmd = 'python ' + file
-		output_file.write(runcmd + '\n')
+		output_file.write(directory.split("/")[-1]+":"+runcmd + '\n')
 
 def identify_with_name(file):
 	root, ext = os.path.splitext(file)
@@ -118,7 +118,7 @@ def identify_with_name(file):
 		err = subprocess.call(cmd, shell=True)
 		if err == 0:
 			runcmd = 'java -classpath ' + directory + ' ' + fname
-			output_file.write(runcmd + '\n')
+			output_file.write(directory.split("/")[-1]+":"+runcmd + '\n')
 			#f.write(runcmd+'\n')
 		else:
 			errf.write('COMPILE_ERROR '+file+'\n')
@@ -127,7 +127,7 @@ def identify_with_name(file):
 		err = subprocess.call(cmd, shell=True)
 		if err == 0:
 			runcmd = root
-			output_file.write(runcmd + '\n')
+			output_file.write(directory.split("/")[-1]+":"+runcmd + '\n')
 		else:
 			errf.write('COMPILE_ERROR '+file+'\n')
 	elif ext == '.c':
@@ -135,13 +135,15 @@ def identify_with_name(file):
 		err = subprocess.call(cmd, shell=True)
 		if err == 0:
 			runcmd = root
-			output_file.write(runcmd + '\n')
+			output_file.write(directory.split("/")[-1]+":"+runcmd + '\n')
 		else:
 			errf.write('COMPILE_ERROR '+file+'\n')
 
 	elif ext == '.py':
 		runcmd = 'python ' + file
-		output_file.write(runcmd + '\n')
+		output_file.write(directory.split("/")[-1]+":"+runcmd + '\n')
+
+
 
 
 for file in find_all_files('./ai_programs/attack'):
