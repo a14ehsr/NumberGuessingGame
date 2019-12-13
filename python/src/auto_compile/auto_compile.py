@@ -26,6 +26,8 @@ else:
 	print('コンパイラ設定ファイルが破損しています．')
 compiler_setting_file.close()
 
+cpp_compiler += " -std=c++11"
+
 print('.cコンパイラ  :'+c_compiler)
 print('.cppコンパイラ:'+cpp_compiler)
 
